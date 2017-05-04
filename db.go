@@ -94,6 +94,15 @@ type DB struct {
 	// of truncate() and fsync() when growing the data file.
 	AllocSize int
 
+	// The CommitHook function is optional. If set, it will be invoked at
+	// the end of every successful transaction, after all
+	// of the transaction-specific handlers have been invoked.
+	CommitHook func (arg interface{})
+
+	// CommitHookArg provides a way for a wrapper library
+	// to pass back context specific data.
+	CommitHookArg interface{}
+	
 	path     string
 	file     *os.File
 	lockfile *os.File // windows only
